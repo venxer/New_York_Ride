@@ -57,7 +57,9 @@ std::string Rider::getDriverFirstName(){return driverFirstName;}
 std::string Rider::getDriverLastName(){return driverLastName;}
 std::string Rider::getDriverPhoneNum(){return driverPhoneNum;}
 
-std::ostream &operator<<(std::ostream &out_str, const Rider &rider);
+std::ostream &operator<<(std::ostream &out_str, const Rider &rider)
 {
-    
+    out_str << "rider" << std::endl;
+
+    return out_str;
 }
