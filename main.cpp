@@ -2,10 +2,13 @@
 #include "rider.h"
 #include "list"
 #include "fstream"
+#include "cmath"
 
 std::list<Driver> readDriverInput(std::string inputFile);
 std::list<Rider> readRiderInput(std::string inputFile);
 bool validPhoneNumFormat(std::string phoneNum);
+double calculateDistance(double lat1, double lon1, double lat2, double lon2);
+
 
 int main(int argc, char const *argv[])
 {
@@ -18,6 +21,16 @@ int main(int argc, char const *argv[])
 
     std::list<Driver> driverList = readDriverInput(driverInput);
     std::list<Rider> riderList = readRiderInput(riderInput);
+
+    if(validPhoneNumFormat(phoneNum))
+    {
+        std::cout << "valid";
+    }
+    else
+    {
+        std::cerr << "Invalid Phone Number Format" << std::endl;
+        exit(1);
+    }
 
     return 0;
 }
@@ -90,14 +103,36 @@ std::list<Rider> readRiderInput(std::string inputFile)
 //checks length and format of phoneNum and returns true if valid
 bool validPhoneNumFormat(std::string phoneNum)
 {
-    if(phoneNum.length() < 8) return false;
+    if(phoneNum.length() != 12) return false;
     if(phoneNum[3] == '-' && phoneNum[7] == '-')
     {
         return true;
     }
     return false;
 }
+// calculate the distance between two coordinates using Haversine formula
+double calculateDistance(double lat1, double lon1, double lat2, double lon2) 
+{
+    const double radiusOfEarth = 6371.0; // Earth's radius in kilometers
 
+    // convert latitude and longitude from degrees to radians
+    lat1 *= M_PI / 180.0;
+    lon1 *= M_PI / 180.0;
+    lat2 *= M_PI / 180.0;
+    lon2 *= M_PI / 180.0;
+
+    // Haversine formula
+    double dLat = lat2 - lat1;
+    double dLon = lon2 - lon1;
+    double a = sin(dLat / 2.0) * sin(dLat / 2.0) + cos(lat1) * cos(lat2) * sin(dLon / 2.0) * sin(dLon / 2.0);
+    double c = 2.0 * atan2(sqrt(a), sqrt(1.0 - a));
+    // distance in kilometers
+    double distanceKM = radiusOfEarth * c;
+    // convert it to distance in miles
+    double distanceMiles = distanceKM * 0.621371;
+
+    return distanceMiles;
+}
 
 
 
