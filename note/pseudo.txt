@@ -1,0 +1,94 @@
+//only allowed to use std::list (NO VECTORS OR ANYTHING ELSE)
+
+//read drivers.txt, riders.txt as inputs of program, parse them 
+//to get rider/driver info and store in list
+
+//one list to store all drivers and another one to store all riders
+
+
+//DRIVERS TXT
+driver first name, driver last name, gender, age, phone num, rating, lat, long, vehicle type,
+state, rider first name, rider last name, rider phone #
+
+//can be available, on the way to pickup, during a trip
+//AVAILABLE -> driver not assigned ride request -> no rider into NULL NULL NULL
+
+
+//RIDERS TXT
+riders first name, riders last name, gender, age, phone #, rating, name of pickup
+location, lat of pickup, long of pickup, name of dropoff, lat of dropoff, long of dropof,
+vehicle preference, state, drivers first, drivers last, drivers phone num
+
+//ready to request, diver on the way, during a trip
+//ready to request is NULL NULL NULL
+
+
+//*see how to print in the hw directions for each case (a lot of if else if statements)
+RIDE REQUEST
+
+//3 outputs 
+0 -> print messages to rider or driver
+1 -> print updated drivers info,, same format as drivers.txt
+2 -> print updated drivers info,, same format as riders.txt
+
+//if driver found
+            //print                             output0 ->          Ride requested for rider Rebecca, looking for an Economy vehicle.
+                                                                    Pick Up Location: Williamsburg, Drop Off Location: Statue_of_Liberty.
+                                                                    We have found the closest driver Elena(4.7) for you.
+                                                                    Elena is now 7.9 miles away from you.
+                                                output1 ->          print updated version of drivers.txt
+                                                output2 ->          print updated version of riders.TXT
+
+//if driver not found                           output0 ->          Ride requested for rider Isabella, looking for a Luxury vehicle.
+                                                                    Pick Up Location: Williamsburg, Drop Off Location: Boerum_Hill.
+                                                                    Sorry we can not find a driver for you at this moment.
+                                    
+//if phone num not in  xxx-xxx-xxxx format      output0 ->          Phone number is invalid.
+
+//if num does not match any riders num          output0 ->          Account does not exist.
+
+//if rider is in the state "Driver_on_the_way"  output0 ->          You have already requested a ride and your driver is on the way to the pickup location.
+
+//if rider is in the state "During_the_trip"    output0 ->          You can not request a ride at this moment as you are already on a trip.
+
+
+
+
+
+phone num -> corresponds to one of the riders in riders.txt who is "Ready tp request"
+    
+CANCEL REQUEST
+//when rider cancels, just cancel request
+//when driver cancels, cancel request AND find another closest driver
+//only drivers on the way to pickup or riders whose driver is on the way can cancel
+
+
+
+//if phone num does not match riders and
+//does not match drivers                                    output0 ->             Account does not exist.
+
+//if cancel request by rider is NOT Driver_on_the_way       output0 ->             You can only cancel a ride request if your driver is currently on the way to the pickup location.
+
+//if cancel request is by driver NOT on_the_way_to_pickup   output0 ->             You can only cancel a ride request if you are currently on the way to the pickup location.
+
+
+//if cancel request by rider in state Driver_on_the_way     output0 ->             Ride request for rider Brenda is now canceled by the rider.
+                                                            output1 ->             print updated drivers.txt AND drivers state should change from on_the_way to available
+                                                            output2 ->             print updated of riders.txt and remove the rider
+
+//if caancel by driver thats on_the_way_to_pickup           output0 ->              Your driver Edward has cancelled the ride request. We will now find a new driver for you.
+                                                                                    Ride requested for rider Angela, looking for a Standard vehicle.
+                                                                                    Pick Up Location: The_Met_Cloisters, Drop Off Location: Brooklyn_Navy_Yard.
+                                                                                    We have found the closest driver Robert(3.2) for you.
+                                                                                    Robert is now 2.1 miles away from you.
+                                                            output1 ->              print updated version of driers.txt
+                                                                                    //old drivers state change from on_way_pickup to available
+                                                                                    //new driver should be assigned and updated 
+                                                                                    //new driver is now associated with driver
+                                                            output2 ->              //print updated riders.txt and rider now associated with new driver
+
+
+
+if argv[num] = "request"
+
+else if argv[num] = "cancel"
