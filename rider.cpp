@@ -61,6 +61,12 @@ std::string Rider::getDriverPhoneNum()const{return driverPhoneNum;}
 //setters
 void Rider::setState(std::string state)
 {
+    /* 
+     *valid states:
+     *Ready_to_request
+     *Driver_on_the_way
+     *During_the_trip
+     */
     this->state = state;
 }
 void Rider::setDriverFirstName(std::string driverFirstName)
