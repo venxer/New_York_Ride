@@ -1,4 +1,5 @@
 #include "driver.h"
+#include <iostream>
 
 //constuctor
 Driver::Driver(std::string firstName,
@@ -43,3 +44,8 @@ std::string Driver::getstate(){return state;}
 std::string Driver::getRiderFirstName(){return riderFirstName;}
 std::string Driver::getRiderLastNam(){return riderLastName;}
 std::string Driver::getRiderPhoneNum(){return riderPhoneNum;}
+
+std::ostream &operator<<(std::ostream &out_str, const Driver &driver);
+{
+
+}
