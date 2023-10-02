@@ -1,0 +1,139 @@
+driver
+cancel ride request
+
+rider
+request ride
+cancel ride request
+
+driver info: drivers.txt
+Driver's first name
+Driver's last name
+Driver's gender
+Driver's age
+Driver's phone number
+Driver's rating
+Driver's current latitude
+Driver's current longitude
+Driver's vehicle type
+Driver's current state
+Rider's first name (null if not assigned to ride)
+Rider's last name (null if not assigned to ride)
+Rider's phone number (null if not assigned to ride)
+
+drive states:
+Available (waiting for request)
+OTW to pickup location (accepted request)
+Mid trip (fulfilling request)
+
+
+rider info: riders.txt
+Rider's first name
+Rider's last name
+Rider's gender
+Rider's age
+Rider's phone number
+Rider's rating
+The name of the rider's pickup location
+The latitude of the rider's pickup location
+The longitude of the rider's pickup location
+The name of the rider's dropoff location
+The latitude of the rider's dropoff location
+The longitude of the rider's dropoff location
+Rider's vehicle preference
+Rider's current state
+Driver's first name (null if not assigned to driver)
+Driver's last name (null if not assigned to driver)
+Driver's phone number (null if not assigned to driver)
+
+rider states:
+Available (ready to request)
+waiting for driver (requested)
+Mid trip (fulfilling request)
+
+
+input format:
+requesting ride
+nyride.exe drivers.txt riders.txt output0.txt output1.txt output2.txt phoneNumber request
+drivers.txt is the input file which contains all drivers' information. Your program should never change this file.
+riders.txt is the input file which contains all riders' information. Your program should never change this file.
+output0.txt is the output file where you print messages to rider or driver.
+output1.txt is the output file where you print the updated drivers information, 
+            thus this file should have the same format as drivers.txt.
+output2.txt is the output file where you print the updated riders information, 
+            thus this file should have the same format as riders.txt.
+phoneNumber. Ideally this should be a phone number which corresponds to one of the riders in the riders.txt whose state is "Ready_to_request"; 
+             but life is not always ideal, and how your program should cope with various phone number cases will be described in this section.
+request indicates this is a ride request.
+
+output0:
+Driver Found - 
+Ride requested for user {rider_name}, looking for an {rider_preferred_vehicle} vehicle.
+Pick Up Location: {rider_pickup}, Drop Off Location: {rider_dropoff}.
+We have found the closest driver {driver_name}({driver_rating}) for you.
+{driver_name} is now {distance_from_rider} miles away from you.
++
+updated version of driver.txt in output1.txt
+updated version of rider.txt in output2.txt
+
+Driver notFound - 
+Ride requested for user {rider_name}, looking for a {rider_preferred_vehicle} vehicle.
+Pick Up Location: {rider_pickup}, Drop Off Location: {rider_dropoff}.
+Sorry we can not find a driver for you at this moment.
+
+if phonenumber not in format of xxx-xxx-xxxx, 
+output0:
+Phone number is invalid.
+
+if phonenumber does not match rider_number,
+output0:
+Account does not exist.
+
+if rider issues ride and driver is OTW,
+output0:
+You have already requested a ride and your driver is on the way to the pickup location.
+
+if rider issues ride and is midtrip,
+output0:
+You can not request a ride at this moment as you are already on a trip.
+
+
+canceling ride
+nyride.exe drivers.txt riders.txt output0.txt output1.txt output2.txt phoneNumber cancel
+if rider cancels, cancel
+if drive cancels, find nearest driver for rider
+
+if phonenumber does not match rider_number AND driver_number,
+output0:
+Account does not exist.
+
+if rider cancels ride and driver NOT OTW
+output0:
+You can only cancel a ride request if your driver is currently on the way to the pickup location.
+
+if driver cancels ride and NOT OTW to pickup,
+output0:
+You can only cancel a ride request if you are currently on the way to the pickup location.
+
+if rider cancels and driver OTW,
+output0:
+Ride request for user Brenda is now canceled by the user.
++
+print an updated version of drivers.txt into output1.txt: driver's state should be changed from On_the_way_to_pickup to Available.
++
+print an updated version of riders.txt into output2.txt: the rider should be removed.
+
+if driver cancels and driver On_the_way_to_pickup
+output0:
+Your driver {driver_name} has cancelled the ride request. We will now find a new driver for you.
+Ride requested for user {rider_name}, looking for a {rider_preferred_vehicle} vehicle.
+Pick Up Location: "rider_pickup", Drop Off Location: {rider_dropoff}.
+We have found the closest driver {new_driver}({new_driver_rating}) for you.
+{new_driver_name} is now {new_driver_distance_from_rider} miles away from you.
++
+print an updated version of drivers.txt into output1.txt: 
+the old driver's state should be changed from On_the_way_to_pickup to Available. 
+A new driver should be assigned and that new driver's state should be updated accordingly. 
+Also the old driver should no longer be associated with this rider, and the new driver should now be associated with this rider.
++
+print an updated version of riders.txt into output2.txt: 
+the rider should now be associated with the new driver.
