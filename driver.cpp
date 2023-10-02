@@ -41,7 +41,7 @@ double Driver::getRating()const{return rating;}
 double Driver::getLatitude()const{return latitude;}
 double Driver::getLongitude()const{return longitude;}
 std::string Driver::getVehicleType()const{return vehicleType;}
-std::string Driver::getstate()const {return state;}
+std::string Driver::getstate()const{return state;}
 std::string Driver::getRiderFirstName()const{return riderFirstName;}
 std::string Driver::getRiderLastNam()const{return riderLastName;}
 std::string Driver::getRiderPhoneNum()const{return riderPhoneNum;}
