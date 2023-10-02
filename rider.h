@@ -43,6 +43,7 @@ class Rider
               std::string driverLastName,
               std::string driverPhoneNum);
 
+        //getters
         std::string getFirstName(){return firstName;}
         std::string getLastName(){return lastName;}
         std::string getGender(){return gender;}
@@ -60,6 +61,12 @@ class Rider
         std::string getDriverFirstName(){return driverFirstName;}
         std::string getDriverLastName(){return driverLastName;}
         std::string getDriverPhoneNum(){return driverPhoneNum;}
+
+        //setters
+        void setState(std::string state);
+        void setDriverFirstName(std::string driverFirstName);
+        void setDriverLastNam(std::string driverLastName);
+        void setDriverPhoneNum(std::string driverPhoneNum);
 };
 
 std::ostream &operator<<(std::ostream &out_str, const Rider &rider);

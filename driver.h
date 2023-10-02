@@ -36,6 +36,7 @@ class Driver
                std::string riderLastName,
                std::string riderPhoneNum);
 
+        //getters
         std::string getFirstName();
         std::string getLastName();
         std::string getGender();
@@ -50,6 +51,11 @@ class Driver
         std::string getRiderLastNam();
         std::string getRiderPhoneNum();
     
+        //setters
+        void setState(std::string state);
+        void setRiderFirstName(std::string riderFirstName);
+        void setRiderLastNam(std::string riderLastName);
+        void setRiderPhoneNum(std::string riderPhoneNum);
 };
 
 std::ostream &operator<<(std::ostream &out_str, const Driver &driver);

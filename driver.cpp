@@ -31,6 +31,7 @@ Driver::Driver(std::string firstName,
     this->riderPhoneNum = riderPhoneNum;
 }
 
+//getters
 std::string Driver::getFirstName(){return firstName;}
 std::string Driver::getLastName(){return lastName;}
 std::string Driver::getGender(){return gender;}
@@ -44,6 +45,24 @@ std::string Driver::getstate(){return state;}
 std::string Driver::getRiderFirstName(){return riderFirstName;}
 std::string Driver::getRiderLastNam(){return riderLastName;}
 std::string Driver::getRiderPhoneNum(){return riderPhoneNum;}
+
+//setters
+void Driver::setState(std::string state)
+{
+    this->state = state;
+}
+void Driver::setRiderFirstName(std::string riderFirstName)
+{
+    this->riderFirstName = riderFirstName;
+}
+void Driver::setRiderLastNam(std::string riderLastName)
+{
+    this->riderLastName = riderLastName;
+}
+void Driver::setRiderPhoneNum(std::string riderPhoneNum)
+{
+    this->riderPhoneNum = riderPhoneNum;
+}
 
 std::ostream &operator<<(std::ostream &out_str, const Driver &driver)
 {
