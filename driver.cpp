@@ -32,19 +32,19 @@ Driver::Driver(std::string firstName,
 }
 
 //getters
-std::string Driver::getFirstName(){return firstName;}
-std::string Driver::getLastName(){return lastName;}
-std::string Driver::getGender(){return gender;}
-unsigned int Driver::getAge(){return age;}
-std::string Driver::getPhoneNum(){return phoneNum;}
-double Driver::getRating(){return rating;}
-double Driver::getLatitude(){return latitude;}
-double Driver::getLongitude(){return longitude;}
-std::string Driver::getVehicleType(){return vehicleType;}
-std::string Driver::getstate(){return state;}
-std::string Driver::getRiderFirstName(){return riderFirstName;}
-std::string Driver::getRiderLastNam(){return riderLastName;}
-std::string Driver::getRiderPhoneNum(){return riderPhoneNum;}
+std::string Driver::getFirstName()const{return firstName;}
+std::string Driver::getLastName()const{return lastName;}
+std::string Driver::getGender()const{return gender;}
+unsigned int Driver::getAge()const{return age;}
+std::string Driver::getPhoneNum()const{return phoneNum;}
+double Driver::getRating()const{return rating;}
+double Driver::getLatitude()const{return latitude;}
+double Driver::getLongitude()const{return longitude;}
+std::string Driver::getVehicleType()const{return vehicleType;}
+std::string Driver::getstate()const {return state;}
+std::string Driver::getRiderFirstName()const{return riderFirstName;}
+std::string Driver::getRiderLastNam()const{return riderLastName;}
+std::string Driver::getRiderPhoneNum()const{return riderPhoneNum;}
 
 //setters
 void Driver::setState(std::string state)

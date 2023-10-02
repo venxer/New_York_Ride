@@ -37,19 +37,19 @@ class Driver
                std::string riderPhoneNum);
 
         //getters
-        std::string getFirstName();
-        std::string getLastName();
-        std::string getGender();
-        unsigned int getAge();
-        std::string getPhoneNum();
-        double getRating();
-        double getLatitude();
-        double getLongitude();
-        std::string getVehicleType();
-        std::string getstate();
-        std::string getRiderFirstName();
-        std::string getRiderLastNam();
-        std::string getRiderPhoneNum();
+        std::string getFirstName()const;
+        std::string getLastName()const;
+        std::string getGender()const;
+        unsigned int getAge()const;
+        std::string getPhoneNum()const;
+        double getRating()const;
+        double getLatitude()const;
+        double getLongitude()const;
+        std::string getVehicleType()const;
+        std::string getstate()const;
+        std::string getRiderFirstName()const;
+        std::string getRiderLastNam()const;
+        std::string getRiderPhoneNum()const;
     
         //setters
         void setState(std::string state);

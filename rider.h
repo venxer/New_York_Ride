@@ -44,23 +44,23 @@ class Rider
               std::string driverPhoneNum);
 
         //getters
-        std::string getFirstName(){return firstName;}
-        std::string getLastName(){return lastName;}
-        std::string getGender(){return gender;}
-        unsigned int getAge(){return age;}
-        std::string getPhoneNum(){return phoneNum;}
-        double getRating(){return rating;}
-        std::string getPickupLocation(){return pickupLocation;}
-        double getPickupLatitude(){return pickupLatitude;}
-        double getPickupLongitude(){return pickupLongitude;}
-        std::string getDropoffLocation(){return dropoffLocation;}
-        double getDropoffLatitude(){return dropoffLatitude;}
-        double getDropoffLongitude(){return dropoffLongitude;}
-        std::string getVehiclePref(){return vehiclePref;}
-        std::string getState(){return state;}
-        std::string getDriverFirstName(){return driverFirstName;}
-        std::string getDriverLastName(){return driverLastName;}
-        std::string getDriverPhoneNum(){return driverPhoneNum;}
+        std::string getFirstName()const;
+        std::string getLastName()const;
+        std::string getGender()const;
+        unsigned int getAge()const;
+        std::string getPhoneNum()const;
+        double getRating()const;
+        std::string getPickupLocation()const;
+        double getPickupLatitude()const;
+        double getPickupLongitude()const;
+        std::string getDropoffLocation()const;
+        double getDropoffLatitude()const;
+        double getDropoffLongitude()const;
+        std::string getVehiclePref()const;
+        std::string getState()const;
+        std::string getDriverFirstName()const;
+        std::string getDriverLastName()const;
+        std::string getDriverPhoneNum()const;
 
         //setters
         void setState(std::string state);

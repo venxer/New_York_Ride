@@ -40,23 +40,23 @@ Rider::Rider(std::string firstName,
 }
 
 //getters
-std::string Rider::getFirstName(){return firstName;}
-std::string Rider::getLastName(){return lastName;}
-std::string Rider::getGender(){return gender;}
-unsigned int Rider::getAge(){return age;}
-std::string Rider::getPhoneNum(){return phoneNum;}
-double Rider::getRating(){return rating;}
-std::string Rider::getPickupLocation(){return pickupLocation;}
-double Rider::getPickupLatitude(){return pickupLatitude;}
-double Rider::getPickupLongitude(){return pickupLongitude;}
-std::string Rider::getDropoffLocation(){return dropoffLocation;}
-double Rider::getDropoffLatitude(){return dropoffLatitude;}
-double Rider::getDropoffLongitude(){return dropoffLongitude;}
-std::string Rider::getVehiclePref(){return vehiclePref;}
-std::string Rider::getState(){return state;}
-std::string Rider::getDriverFirstName(){return driverFirstName;}
-std::string Rider::getDriverLastName(){return driverLastName;}
-std::string Rider::getDriverPhoneNum(){return driverPhoneNum;}
+std::string Rider::getFirstName()const{return firstName;}
+std::string Rider::getLastName()const{return lastName;}
+std::string Rider::getGender()const{return gender;}
+unsigned int Rider::getAge()const{return age;}
+std::string Rider::getPhoneNum()const{return phoneNum;}
+double Rider::getRating()const{return rating;}
+std::string Rider::getPickupLocation()const{return pickupLocation;}
+double Rider::getPickupLatitude()const{return pickupLatitude;}
+double Rider::getPickupLongitude()const{return pickupLongitude;}
+std::string Rider::getDropoffLocation()const{return dropoffLocation;}
+double Rider::getDropoffLatitude()const{return dropoffLatitude;}
+double Rider::getDropoffLongitude()const{return dropoffLongitude;}
+std::string Rider::getVehiclePref()const{return vehiclePref;}
+std::string Rider::getState()const{return state;}
+std::string Rider::getDriverFirstName()const{return driverFirstName;}
+std::string Rider::getDriverLastName()const{return driverLastName;}
+std::string Rider::getDriverPhoneNum()const{return driverPhoneNum;}
 
 //setters
 void Rider::setState(std::string state)
