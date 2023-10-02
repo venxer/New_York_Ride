@@ -35,6 +35,19 @@ class Driver
                std::string riderLastName,
                std::string riderPhoneNum);
 
+        std::string getFirstName();
+        std::string getLastName();
+        std::string getGender();
+        unsigned int getAge();
+        std::string getPhoneNum();
+        double getRating();
+        double getLatitude();
+        double getLongitude();
+        std::string getVehicleType();
+        std::string getstate();
+        std::string getRiderFirstName();
+        std::string getRiderLastNam();
+        std::string getRiderPhoneNum();
     
 };
 
