@@ -1,6 +1,7 @@
 #include "rider.h"
 #include <iostream>
 #include <list>
+#include <cmath>
 
 //constuctor
 Rider::Rider(std::string firstName,
@@ -108,21 +109,55 @@ double calculateDistance(double lat1, double lon1, double lat2, double lon2)
     return distanceMiles;
 }
 //checks if a any rider has the phone number
-bool isRiderNum(std::list<Rider> &riderList, std::string num)
+bool isRiderNum(const std::list<Rider> &riderList, const std::string num, Rider &riderOut)
 {
     for(Rider rider : riderList)
     {
         if(rider.getPhoneNum() == num)
         {
+            riderOut = rider;
             return true;
         }
     }
     return false;
 }
-//returns the closes driver
-int Rider::closestDriverIndex(std::list<Driver> &driverList)
+//returns true is driver is found and stores closest driver in driverOut along with distance
+bool Rider::closestDriver(std::list<Driver> &driverList, Driver &driverOut, double &distanceOut)
 {
-    if(driver)
+    bool driverIsFound = false;
+    double shortestDistace = -1.0;
+    Driver driver;
+    std::list<Driver>::iterator it;
+    for(it = driverList.begin(); it != driverList.end(); ++it)
+    {
+        Driver driver = *it;
+        //filters for available and preffered viechle
+        if(driver.getState() == "Available" && 
+           driver.getVehicleType() == vehiclePref)
+        {
+            driverIsFound = true;
+            //gets distance between rider and driver
+            double distance = calculateDistance(pickupLatitude, pickupLongitude,
+                                                driver.getLatitude(), driver.getLongitude());
+            //finds driver with shortest distance from rider
+            if(shortestDistace == -1.0)
+            {
+                shortestDistace = distance;
+                driverOut = *it;
+                distanceOut = shortestDistace;
+            }
+            else
+            {
+                if(distance < shortestDistace)
+                {
+                    shortestDistace = distance;
+                    driverOut = *it;
+                    distanceOut = shortestDistace;
+                }
+            }
+        }
+    }
+    return driverIsFound;
 }
 
 std::ostream &operator<<(std::ostream &out_str, const Rider &rider)
