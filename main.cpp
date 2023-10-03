@@ -7,7 +7,6 @@
 std::list<Driver> readDriverInput(std::string inputFile);
 std::list<Rider> readRiderInput(std::string inputFile);
 bool validPhoneNumFormat(std::string phoneNum);
-double calculateDistance(double lat1, double lon1, double lat2, double lon2);
 
 int main(int argc, char const *argv[])
 {
@@ -40,14 +39,12 @@ int main(int argc, char const *argv[])
             //checks if phoneNum is a rider's phone number
             if(isRiderNum(riderList, phoneNum))
             {
-                for(Driver driver:driverList)
-                {
-                    userOut << driver;
-                }
+                Driver closestDriver = 
             }
             else
             {
                 userOut << "Account does not exist.";
+                return 0;
             }
         }
         else if(status == "cancel")
@@ -63,6 +60,7 @@ int main(int argc, char const *argv[])
     else
     {
         userOut << "Phone number is invalid."; 
+        return 0;
     }
 
     return 0;
@@ -142,29 +140,3 @@ bool validPhoneNumFormat(std::string phoneNum)
     }
     return false;
 }
-// calculate the distance between two coordinates using Haversine formula
-double calculateDistance(double lat1, double lon1, double lat2, double lon2) 
-{
-    const double radiusOfEarth = 6371.0; // Earth's radius in kilometers
-
-    // convert latitude and longitude from degrees to radians
-    lat1 *= M_PI / 180.0;
-    lon1 *= M_PI / 180.0;
-    lat2 *= M_PI / 180.0;
-    lon2 *= M_PI / 180.0;
-
-    // Haversine formula
-    double dLat = lat2 - lat1;
-    double dLon = lon2 - lon1;
-    double a = sin(dLat / 2.0) * sin(dLat / 2.0) + cos(lat1) * cos(lat2) * sin(dLon / 2.0) * sin(dLon / 2.0);
-    double c = 2.0 * atan2(sqrt(a), sqrt(1.0 - a));
-    // distance in kilometers
-    double distanceKM = radiusOfEarth * c;
-    // convert it to distance in miles
-    double distanceMiles = distanceKM * 0.621371;
-
-    return distanceMiles;
-}
-
-
-
