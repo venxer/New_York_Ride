@@ -41,7 +41,7 @@ double Driver::getRating()const{return rating;}
 double Driver::getLatitude()const{return latitude;}
 double Driver::getLongitude()const{return longitude;}
 std::string Driver::getVehicleType()const{return vehicleType;}
-std::string Driver::getstate()const{return state;}
+std::string Driver::getState()const{return state;}
 std::string Driver::getRiderFirstName()const{return riderFirstName;}
 std::string Driver::getRiderLastNam()const{return riderLastName;}
 std::string Driver::getRiderPhoneNum()const{return riderPhoneNum;}
@@ -76,7 +76,7 @@ std::ostream &operator<<(std::ostream &out_str, const Driver &driver)
             << driver.getGender() << " " << driver.getAge() << " " 
             << driver.getPhoneNum() << " " << driver.getRating() << " " 
             << driver.getLatitude() << " " << driver.getLongitude() << " " 
-            << driver.getVehicleType() << " " << driver.getstate() << " " 
+            << driver.getVehicleType() << " " << driver.getState() << " " 
             << driver.getRiderFirstName() << " " << driver.getRiderLastNam() << " "
             << driver.getRiderPhoneNum() << "\n";
     return out_str;
