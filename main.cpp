@@ -3,10 +3,12 @@
 #include <list>
 #include <fstream>
 #include <cmath>
+#include <iomanip>
 
 std::list<Driver> readDriverInput(std::string inputFile);
 std::list<Rider> readRiderInput(std::string inputFile);
 bool validPhoneNumFormat(std::string phoneNum);
+std::string doubleToString(double num, int targetLength);
 
 int main(int argc, char const *argv[])
 {
@@ -60,15 +62,16 @@ int main(int argc, char const *argv[])
 
                 //driver found
                 if(driverFound)
-                {
+                {      
                     std::string message = "Ride requested for user " + rider.getFirstName() + 
-                                      ", looking for an " + rider.getVehiclePref() + " vehicle.\n" +
-                                      "Pick Up Location: " + rider.getPickupLocation() + 
-                                      ", Drop Off Location: " + rider.getDropoffLocation() + ".\n" +
-                                      "We have found the closest driver " + closestDriver.getFirstName() + 
-                                      " (" + std::to_string(closestDriver.getRating()) + ") for you.\n" +
-                                      closestDriver.getFirstName() + " is now " + std::to_string(distance) + 
-                                      " miles away from you.";
+                                          ", looking for an " + rider.getVehiclePref() + " vehicle.\n" +
+                                          "Pick Up Location: " + rider.getPickupLocation() + 
+                                          ", Drop Off Location: " + rider.getDropoffLocation() + ".\n" +
+                                          "We have found the closest driver " + closestDriver.getFirstName() + 
+                                          "(" + doubleToString(closestDriver.getRating(), 3) + ") for you.\n" +
+                                          closestDriver.getFirstName() + " is now " + doubleToString(distance, 3) + 
+                                          " miles away from you.";
+
                     /* update by index direclty or update by replacing old with updated */
                     userOut << message;
 
@@ -183,4 +186,14 @@ bool validPhoneNumFormat(std::string phoneNum)
         return true;
     }
     return false;
+}
+//double to string as desired length
+std::string doubleToString(double num, int targetLength)
+{
+    //check length of targetLength
+    if(targetLength > std::to_string(num).length())
+    {
+        return std::to_string(num);
+    }
+    return std::to_string(num).substr(0, targetLength);
 }
