@@ -1,13 +1,11 @@
 #include "driver.h"
 #include "rider.h"
-#include "list"
-#include "fstream"
-#include "cmath"
+#include <list>
+#include <fstream>
+#include <cmath>
 
 std::list<Driver> readDriverInput(std::string inputFile);
 std::list<Rider> readRiderInput(std::string inputFile);
-void updateDriverOutput(std::string outputFile, std::list<Driver> &drivers);
-void updateRiderOutput(std::string outputFile, std::list<Rider> &riders);
 bool validPhoneNumFormat(std::string phoneNum);
 double calculateDistance(double lat1, double lon1, double lat2, double lon2);
 
@@ -15,29 +13,60 @@ int main(int argc, char const *argv[])
 {
     std::string driverInput = argv[1];
     std::string riderInput = argv[2];
-    std::string updateDriverOutput = argv[3];
-    std::string updateRriverOutput = argv[4];
-    std::string phoneNum = argv[5];
-    std::string status = argv[6];
+    std::string userOutput = argv[3];
+    std::string driverOutput = argv[4];
+    std::string riderOutput = argv[5];
+    std::string phoneNum = argv[6];
+    std::string status = argv[7];
+
+    std::ofstream userOut(userOutput);
+    std::ofstream driverOut(driverOutput);
+    std::ofstream riderOut(riderOutput);
 
     std::list<Driver> driverList = readDriverInput(driverInput);
     std::list<Rider> riderList = readRiderInput(riderInput);
 
+    // std::list<Driver> driverList = readDriverInput("drivers.txt");
+    // for(Driver driver : driverList)
+    // {
+    //     std::cout << driver.getLongitude() << std::endl;
+    // }
 
-    //exits program if phone number is invalid
+    //check if phone number is invalid
     if(validPhoneNumFormat(phoneNum))
     {
-        std::cout << "valid";
+        if(status == "request")
+        {
+            //checks if phoneNum is a rider's phone number
+            if(isRiderNum(riderList, phoneNum))
+            {
+                for(Driver driver:driverList)
+                {
+                    userOut << driver;
+                }
+            }
+            else
+            {
+                userOut << "Account does not exist.";
+            }
+        }
+        else if(status == "cancel")
+        {
+
+        }
+        else
+        {
+            std::cerr << "Invalid Mode" << std::endl;
+            exit(1);
+        }
     }
     else
     {
-        std::cerr << "Invalid Phone Number Format" << std::endl;
-        exit(1);
+        userOut << "Phone number is invalid."; 
     }
 
     return 0;
 }
-
 
 std::list<Driver> readDriverInput(std::string inputFile)
 {
@@ -102,46 +131,6 @@ std::list<Rider> readRiderInput(std::string inputFile)
     //close inputFIle
     in_str.close();
     return riderInfo;
-}
-void updateDriverOutput(std::string outputFile, std::list<Driver> &drivers)
-{
-    std::ofstream out_str(outputFile);
-    if(!out_str.good())
-    {
-        std::cerr << "Invalid Driver Output" << std::endl;
-        exit(1);
-    }
-    for(Driver driver : drivers)
-    {
-        out_str << driver.getFirstName() << " " << driver.getLastName() << " " 
-                << driver.getGender() << " " << driver.getAge() << " " 
-                << driver.getPhoneNum() << " " << driver.getRating() << " " 
-                << driver.getLatitude() << " " << driver.getLongitude() << " " 
-                << driver.getVehicleType() << " " << driver.getstate() << " " 
-                << driver.getRiderFirstName() << " " << driver.getRiderLastNam() << " "
-                << driver.getRiderPhoneNum() << "\n";
-    }
-}
-void updateRiderOutput(std::string outputFile, std::list<Rider> &riders)
-{
-    std::ofstream out_str(outputFile);
-    if(!out_str.good())
-    {
-        std::cerr << "Invalid Rider Output" << std::endl;
-        exit(1);
-    }
-    for(Rider rider : riders)
-    {
-        out_str << rider.getFirstName() << " " << rider.getLastName() << " " 
-                << rider.getGender() << " " << rider.getAge() << " " 
-                << rider.getPhoneNum() << " " << rider.getRating() << " " 
-                << rider.getPickupLocation() << " " << rider.getPickupLatitude() << " " 
-                << rider.getPickupLongitude() << " " << rider.getDropoffLocation() << " " 
-                << rider.getDropoffLatitude() << " " << rider.getDropoffLongitude() << " " 
-                << rider.getVehiclePref() << " " << rider.getState() << " " 
-                << rider.getDriverFirstName() << " " << rider.getDriverLastName() 
-                << " " << rider.getDriverPhoneNum() << "\n";
-    }
 }
 //checks length and format of phoneNum and returns true if valid
 bool validPhoneNumFormat(std::string phoneNum)
