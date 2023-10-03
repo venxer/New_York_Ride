@@ -1,6 +1,7 @@
 #ifndef RIDER_H
 #define RIDER_H
 
+#include "driver.h"
 #include <string>
 #include <list>
 
@@ -70,7 +71,9 @@ class Rider
         void setDriverPhoneNum(std::string driverPhoneNum);
 
         //functions
-        
+        double calculateDistance(double lat1, double lon1, double lat2, double lon2);
+        int closestDriverIndex(std::list<Driver> &driverList);
+
 };
 bool isRiderNum(std::list<Rider> &riderList, std::string num);
 std::ostream &operator<<(std::ostream &out_str, const Rider &rider);
