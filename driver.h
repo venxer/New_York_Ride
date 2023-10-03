@@ -22,6 +22,7 @@ class Driver
         std::string riderPhoneNum;
         
     public:
+        Driver();
         Driver(std::string firstName,
                std::string lastName,
                std::string gender,
