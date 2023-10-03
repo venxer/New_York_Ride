@@ -83,6 +83,30 @@ void Rider::setDriverPhoneNum(std::string driverPhoneNum)
     this->driverPhoneNum = driverPhoneNum;
 }
 
+//functions
+// calculate the distance between two coordinates using Haversine formula
+double calculateDistance(double lat1, double lon1, double lat2, double lon2) 
+{
+    const double radiusOfEarth = 6371.0; // Earth's radius in kilometers
+
+    // convert latitude and longitude from degrees to radians
+    lat1 *= M_PI / 180.0;
+    lon1 *= M_PI / 180.0;
+    lat2 *= M_PI / 180.0;
+    lon2 *= M_PI / 180.0;
+
+    // Haversine formula
+    double dLat = lat2 - lat1;
+    double dLon = lon2 - lon1;
+    double a = sin(dLat / 2.0) * sin(dLat / 2.0) + cos(lat1) * cos(lat2) * sin(dLon / 2.0) * sin(dLon / 2.0);
+    double c = 2.0 * atan2(sqrt(a), sqrt(1.0 - a));
+    // distance in kilometers
+    double distanceKM = radiusOfEarth * c;
+    // convert it to distance in miles
+    double distanceMiles = distanceKM * 0.621371;
+
+    return distanceMiles;
+}
 //checks if a any rider has the phone number
 bool isRiderNum(std::list<Rider> &riderList, std::string num)
 {
@@ -95,6 +119,12 @@ bool isRiderNum(std::list<Rider> &riderList, std::string num)
     }
     return false;
 }
+//returns the closes driver
+int Rider::closestDriverIndex(std::list<Driver> &driverList)
+{
+    if(driver)
+}
+
 std::ostream &operator<<(std::ostream &out_str, const Rider &rider)
 {
     out_str << rider.getFirstName() << " " << rider.getLastName() << " " 
