@@ -2,19 +2,19 @@
 #include <iostream>
 
 //constuctor
-Driver::Driver(std::string firstName = "",
-               std::string lastName = "",
-               std::string gender = "",
-               unsigned int age = 0,
-               std::string phoneNum = "",
-               double rating = 0.0,
-               double latitude = 0.0,
-               double longitude = 0.0,
-               std::string vehicleType = "",
-               std::string state = "",
-               std::string riderFirstName = "",
-               std::string riderLastName = "",
-               std::string riderPhoneNum = "")
+Driver::Driver(std::string firstName,
+               std::string lastName,
+               std::string gender,
+               unsigned int age,
+               std::string phoneNum,
+               double rating,
+               double latitude,
+               double longitude,
+               std::string vehicleType,
+               std::string state,
+               std::string riderFirstName,
+               std::string riderLastName,
+               std::string riderPhoneNum)
 {
     this->firstName = firstName;
     this->lastName = lastName;
@@ -72,6 +72,12 @@ void Driver::setRiderPhoneNum(std::string riderPhoneNum)
 
 std::ostream &operator<<(std::ostream &out_str, const Driver &driver)
 {
-    out_str << "driver" << std::endl;
+    out_str << driver.getFirstName() << " " << driver.getLastName() << " " 
+            << driver.getGender() << " " << driver.getAge() << " " 
+            << driver.getPhoneNum() << " " << driver.getRating() << " " 
+            << driver.getLatitude() << " " << driver.getLongitude() << " " 
+            << driver.getVehicleType() << " " << driver.getstate() << " " 
+            << driver.getRiderFirstName() << " " << driver.getRiderLastNam() << " "
+            << driver.getRiderPhoneNum() << "\n";
     return out_str;
 }

@@ -2,6 +2,7 @@
 #define RIDER_H
 
 #include <string>
+#include <list>
 
 class Rider
 {
@@ -25,24 +26,23 @@ class Rider
         std::string driverPhoneNum;
         
     public:
-        Rider();
-        Rider(std::string firstName,
-              std::string lastName,
-              std::string gender,
-              unsigned int age,
-              std::string phoneNum,
-              double rating,
-              std::string pickupLocation,
-              double pickupLatitude,
-              double pickupLongitude,
-              std::string dropoffLocation,
-              double dropoffLatitude,
-              double dropoffLongitude,
-              std::string vehiclePref,
-              std::string state,
-              std::string driverFirstName,
-              std::string driverLastName,
-              std::string driverPhoneNum);
+        Rider(std::string firstName = "",
+              std::string lastName = "",
+              std::string gender = "",
+              unsigned int age = 0,
+              std::string phoneNum = "",
+              double rating = 0.0,
+              std::string pickupLocation = "",
+              double pickupLatitude = 0.0,
+              double pickupLongitude = 0.0,
+              std::string dropoffLocation = "",
+              double dropoffLatitude = 0.0,
+              double dropoffLongitude = 0.0,
+              std::string vehiclePref = "",
+              std::string state = "",
+              std::string driverFirstName = "",
+              std::string driverLastName = "",
+              std::string driverPhoneNum = "");
 
         //getters
         std::string getFirstName()const;
@@ -68,8 +68,11 @@ class Rider
         void setDriverFirstName(std::string driverFirstName);
         void setDriverLastNam(std::string driverLastName);
         void setDriverPhoneNum(std::string driverPhoneNum);
-};
 
+        //functions
+        
+};
+bool isRiderNum(std::list<Rider> &riderList, std::string num);
 std::ostream &operator<<(std::ostream &out_str, const Rider &rider);
 
 #endif

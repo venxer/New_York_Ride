@@ -22,20 +22,19 @@ class Driver
         std::string riderPhoneNum;
         
     public:
-        Driver();
-        Driver(std::string firstName,
-               std::string lastName,
-               std::string gender,
-               unsigned int age,
-               std::string phoneNum,
-               double rating,
-               double latitude,
-               double longitude,
-               std::string vehicleType,
-               std::string state,
-               std::string riderFirstName,
-               std::string riderLastName,
-               std::string riderPhoneNum);
+        Driver(std::string firstName = "",
+               std::string lastName = "",
+               std::string gender = "",
+               unsigned int age = 0,
+               std::string phoneNum = "",
+               double rating = 0.0,
+               double latitude = 0.0,
+               double longitude = 0.0,
+               std::string vehicleType = "",
+               std::string state = "",
+               std::string riderFirstName = "",
+               std::string riderLastName = "",
+               std::string riderPhoneNum = "");
 
         //getters
         std::string getFirstName()const;

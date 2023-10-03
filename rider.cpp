@@ -1,24 +1,25 @@
 #include "rider.h"
 #include <iostream>
+#include <list>
 
 //constuctor
-Rider::Rider(std::string firstName = "",
-             std::string lastName = "",
-             std::string gender = "",
-             unsigned int age = 0,
-             std::string phoneNum = "",
-             double rating = 0.0,
-             std::string pickupLocation = "",
-             double pickupLatitude = 0.0,
-             double pickupLongitude = 0.0,
-             std::string dropoffLocation = "",
-             double dropoffLatitude = 0.0,
-             double dropoffLongitude = 0.0,
-             std::string vehiclePref = "",
-             std::string state = "",
-             std::string driverFirstName = "",
-             std::string driverLastName = "",
-             std::string driverPhoneNum = "")
+Rider::Rider(std::string firstName,
+             std::string lastName,
+             std::string gender,
+             unsigned int age,
+             std::string phoneNum,
+             double rating,
+             std::string pickupLocation,
+             double pickupLatitude,
+             double pickupLongitude,
+             std::string dropoffLocation,
+             double dropoffLatitude,
+             double dropoffLongitude,
+             std::string vehiclePref,
+             std::string state,
+             std::string driverFirstName,
+             std::string driverLastName,
+             std::string driverPhoneNum)
 {
     this->firstName = firstName;
     this->lastName = lastName;
@@ -82,9 +83,28 @@ void Rider::setDriverPhoneNum(std::string driverPhoneNum)
     this->driverPhoneNum = driverPhoneNum;
 }
 
+//checks if a any rider has the phone number
+bool isRiderNum(std::list<Rider> &riderList, std::string num)
+{
+    for(Rider rider : riderList)
+    {
+        if(rider.getPhoneNum() == num)
+        {
+            return true;
+        }
+    }
+    return false;
+}
 std::ostream &operator<<(std::ostream &out_str, const Rider &rider)
 {
-    out_str << "rider" << std::endl;
-
+    out_str << rider.getFirstName() << " " << rider.getLastName() << " " 
+            << rider.getGender() << " " << rider.getAge() << " " 
+            << rider.getPhoneNum() << " " << rider.getRating() << " " 
+            << rider.getPickupLocation() << " " << rider.getPickupLatitude() << " " 
+            << rider.getPickupLongitude() << " " << rider.getDropoffLocation() << " " 
+            << rider.getDropoffLatitude() << " " << rider.getDropoffLongitude() << " " 
+            << rider.getVehiclePref() << " " << rider.getState() << " " 
+            << rider.getDriverFirstName() << " " << rider.getDriverLastName() 
+            << " " << rider.getDriverPhoneNum() << "\n";
     return out_str;
 }
