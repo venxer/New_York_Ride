@@ -140,20 +140,12 @@ bool Rider::closestDriver(std::list<Driver> &driverList, Driver &driverOut, doub
             double distance = calculateDistance(pickupLatitude, pickupLongitude,
                                                 driver.getLatitude(), driver.getLongitude());
             //finds driver with shortest distance from rider
-            if(shortestDistace == -1.0)
+            if(shortestDistace == -1.0 || distance < shortestDistace)
             {
                 shortestDistace = distance;
+                
                 driverOut = *it;
                 distanceOut = shortestDistace;
-            }
-            else
-            {
-                if(distance < shortestDistace)
-                {
-                    shortestDistace = distance;
-                    driverOut = *it;
-                    distanceOut = shortestDistace;
-                }
             }
         }
     }
