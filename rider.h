@@ -41,9 +41,9 @@ class Rider
               double dropoffLongitude = 0.0,
               std::string vehiclePref = "",
               std::string state = "",
-              std::string driverFirstName = "",
-              std::string driverLastName = "",
-              std::string driverPhoneNum = "");
+              std::string driverFirstName = "null",
+              std::string driverLastName = "null",
+              std::string driverPhoneNum = "null");
 
         //getters
         std::string getFirstName()const;
@@ -71,11 +71,11 @@ class Rider
         void setDriverPhoneNum(std::string driverPhoneNum);
 
         //functions
-        double calculateDistance(double lat1, double lon1, double lat2, double lon2);
-        int closestDriverIndex(std::list<Driver> &driverList);
+        bool closestDriver(std::list<Driver> &driverList, Driver &driverOut, double &distanceOut);
 
 };
-bool isRiderNum(std::list<Rider> &riderList, std::string num);
-std::ostream &operator<<(std::ostream &out_str, const Rider &rider);
+bool isRiderNum(const std::list<Rider> &riderList, const std::string num, Rider &riderOut);
+double calculateDistance(double lat1, double lon1, double lat2, double lon2);
+std::ostream &operator<<(std::ostream &out_str, const Rider &riderOut);
 
 #endif

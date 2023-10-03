@@ -32,9 +32,9 @@ class Driver
                double longitude = 0.0,
                std::string vehicleType = "",
                std::string state = "",
-               std::string riderFirstName = "",
-               std::string riderLastName = "",
-               std::string riderPhoneNum = "");
+               std::string riderFirstName = "null",
+               std::string riderLastName = "null",
+               std::string riderPhoneNum = "null");
 
         //getters
         std::string getFirstName()const;
@@ -46,7 +46,7 @@ class Driver
         double getLatitude()const;
         double getLongitude()const;
         std::string getVehicleType()const;
-        std::string getstate()const;
+        std::string getState()const;
         std::string getRiderFirstName()const;
         std::string getRiderLastNam()const;
         std::string getRiderPhoneNum()const;
