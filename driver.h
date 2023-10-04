@@ -48,13 +48,13 @@ class Driver
         std::string getVehicleType()const;
         std::string getState()const;
         std::string getRiderFirstName()const;
-        std::string getRiderLastNam()const;
+        std::string getRiderLastName()const;
         std::string getRiderPhoneNum()const;
     
         //setters
         void setState(std::string state);
         void setRiderFirstName(std::string riderFirstName);
-        void setRiderLastNam(std::string riderLastName);
+        void setRiderLastName(std::string riderLastName);
         void setRiderPhoneNum(std::string riderPhoneNum);
 };
 

@@ -43,7 +43,7 @@ double Driver::getLongitude()const{return longitude;}
 std::string Driver::getVehicleType()const{return vehicleType;}
 std::string Driver::getState()const{return state;}
 std::string Driver::getRiderFirstName()const{return riderFirstName;}
-std::string Driver::getRiderLastNam()const{return riderLastName;}
+std::string Driver::getRiderLastName()const{return riderLastName;}
 std::string Driver::getRiderPhoneNum()const{return riderPhoneNum;}
 
 //setters
@@ -61,7 +61,7 @@ void Driver::setRiderFirstName(std::string riderFirstName)
 {
     this->riderFirstName = riderFirstName;
 }
-void Driver::setRiderLastNam(std::string riderLastName)
+void Driver::setRiderLastName(std::string riderLastName)
 {
     this->riderLastName = riderLastName;
 }
@@ -77,7 +77,7 @@ std::ostream &operator<<(std::ostream &out_str, const Driver &driver)
             << driver.getPhoneNum() << " " << driver.getRating() << " " 
             << driver.getLatitude() << " " << driver.getLongitude() << " " 
             << driver.getVehicleType() << " " << driver.getState() << " " 
-            << driver.getRiderFirstName() << " " << driver.getRiderLastNam() << " "
+            << driver.getRiderFirstName() << " " << driver.getRiderLastName() << " "
             << driver.getRiderPhoneNum() << "\n";
     return out_str;
 }
