@@ -75,7 +75,7 @@ void Rider::setDriverFirstName(std::string driverFirstName)
 {
     this->driverFirstName = driverFirstName;
 }
-void Rider::setDriverLastNam(std::string driverLastName)
+void Rider::setDriverLastName(std::string driverLastName)
 {
     this->driverLastName = driverLastName;
 }
@@ -109,13 +109,13 @@ double calculateDistance(double lat1, double lon1, double lat2, double lon2)
     return distanceMiles;
 }
 //checks if a any rider has the phone number
-bool isRiderNum(const std::list<Rider> &riderList, const std::string num, Rider &riderOut)
+bool isRiderNum(std::list<Rider> &riderList, const std::string num, std::list<Rider>::iterator &riderIterator)
 {
-    for(Rider rider : riderList)
+    for(auto it = riderList.begin(); it != riderList.end(); ++it)
     {
-        if(rider.getPhoneNum() == num)
+        if(it->getPhoneNum() == num)
         {
-            riderOut = rider;
+            riderIterator = it;
             return true;
         }
     }
@@ -125,29 +125,37 @@ bool isRiderNum(const std::list<Rider> &riderList, const std::string num, Rider 
 bool Rider::closestDriver(std::list<Driver> &driverList, Driver &driverOut, double &distanceOut)
 {
     bool driverIsFound = false;
-    double shortestDistace = -1.0;
-    Driver driver;
-    std::list<Driver>::iterator it;
-    for(it = driverList.begin(); it != driverList.end(); ++it)
+    double shortestDistance = -1.0;
+    std::list<Driver>::iterator closestDriverIterator;
+    for(auto it = driverList.begin(); it != driverList.end(); ++it)
     {
-        Driver driver = *it;
         //filters for available and preffered viechle
-        if(driver.getState() == "Available" && 
-           driver.getVehicleType() == vehiclePref)
+        if(it->getState() == "Available" && 
+           it->getVehicleType() == vehiclePref)
         {
             driverIsFound = true;
             //gets distance between rider and driver
             double distance = calculateDistance(pickupLatitude, pickupLongitude,
-                                                driver.getLatitude(), driver.getLongitude());
+                                                it->getLatitude(), it->getLongitude());
             //finds driver with shortest distance from rider
-            if(shortestDistace == -1.0 || distance < shortestDistace)
+            if(shortestDistance == -1.0 || distance < shortestDistance)
             {
-                shortestDistace = distance;
-                
-                driverOut = *it;
-                distanceOut = shortestDistace;
+                shortestDistance = distance;
+                closestDriverIterator = it;
             }
         }
+    }
+    if(driverIsFound)
+    {
+        //add rider to driver info
+        closestDriverIterator->setRiderFirstName(firstName);
+        closestDriverIterator->setRiderLastName(lastName);
+        closestDriverIterator->setRiderPhoneNum(phoneNum);
+        //set state of driver
+        closestDriverIterator->setState("On_the_way_to_pickup");
+        //output vars
+        driverOut = *closestDriverIterator;
+        distanceOut = shortestDistance;
     }
     return driverIsFound;
 }
