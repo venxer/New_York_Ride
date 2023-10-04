@@ -4,6 +4,7 @@
 #include <fstream>
 #include <cmath>
 #include <iomanip>
+#include <algorithm>
 
 std::list<Driver> readDriverInput(std::string inputFile);
 std::list<Rider> readRiderInput(std::string inputFile);
@@ -114,7 +115,67 @@ int main(int argc, char const *argv[])
         }
         else if(status == "cancel")
         {
+            //find the account the number belongs to
+            std::list<Driver>::iterator driverIterator;
+            bool validDriverAccount = isDriverNum(driverList, phoneNum, driverIterator);
+            std::list<Rider>::iterator riderIterator;
+            bool validRiderAccount = isRiderNum(riderList, phoneNum, riderIterator);
+            //if account belongs to driver
+            if(validDriverAccount)
+            {
+                if(driverIterator->getState() != "On_the_way_to_pickup")
+                {
+                    userOut << "You can only cancel a ride request if you are currently on the way to the pickup location.";
+                    return 0;
+                }
+                if(driverIterator->getState() == "On_the_way_to_pickup")
+                {
 
+                }
+            }
+            //if acount belongs to rider
+            else if(validRiderAccount)
+            {
+                //driver is not OTW to pickup
+                if(riderIterator->getState() != "Driver_on_the_way")
+                {
+                    userOut << "You can only cancel a ride request if your driver is currently on the way to the pickup location.";
+                    return 0;
+                }
+                //driver is OTW
+                if(riderIterator->getState() == "Driver_on_the_way")
+                {
+                    std::list<Driver>::iterator driverWithRiderIterator;
+                    findDriver(driverList, riderIterator->getPhoneNum(), driverWithRiderIterator);
+                    //remove rider from driver
+                    driverWithRiderIterator->setRiderFirstName("null");
+                    driverWithRiderIterator->setRiderLastName("null");
+                    driverWithRiderIterator->setRiderPhoneNum("null");
+                    //set driver state
+                    driverWithRiderIterator->setState("Available");
+                    //output message
+                    std::string message = "Ride request for user " + riderIterator->getFirstName() +  "is now canceled by the user.";
+                    //remove rider
+                    riderList.erase(riderIterator);
+                    //output Data
+                    userOut << message;
+                    //update Data
+                    for(Driver driver : driverList)
+                    {
+                        driverOut << driver;
+                    }
+                    for(Rider rider : riderList)
+                    {
+                        riderOut << rider;
+                    }
+                    return 0;
+                }
+            }
+            else
+            {
+                userOut << "Account does not exist.";
+                return 0;
+            }
         }
         else
         {
