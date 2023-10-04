@@ -56,26 +56,33 @@ int main(int argc, char const *argv[])
                     return 0;
                 }
                 //Ready_to_request
-                Driver closestDriver;
                 double distance = 0.0;
-                bool driverFound = riderIterator->closestDriver(driverList, closestDriver, distance);
+                std::list<Driver>::iterator closestDriverIterator;
+                bool driverFound = riderIterator->closestDriver(driverList, distance, closestDriverIterator);
                 //driver found
                 if(driverFound)
-                {      
+                {   
+                    //output message
                     std::string message = "Ride requested for user " + riderIterator->getFirstName() + 
                                           ", looking for an " + riderIterator->getVehiclePref() + " vehicle.\n" +
                                           "Pick Up Location: " + riderIterator->getPickupLocation() + 
                                           ", Drop Off Location: " + riderIterator->getDropoffLocation() + ".\n" +
-                                          "We have found the closest driver " + closestDriver.getFirstName() + 
-                                          "(" + doubleToString(closestDriver.getRating(), 3) + ") for you.\n" +
-                                          closestDriver.getFirstName() + " is now " + doubleToString(distance, 3) + 
+                                          "We have found the closest driver " + closestDriverIterator->getFirstName() + 
+                                          "(" + doubleToString(closestDriverIterator->getRating(), 3) + ") for you.\n" +
+                                          closestDriverIterator->getFirstName() + " is now " + doubleToString(distance, 3) + 
                                           " miles away from you.";
                     //add driver to rider info
-                    riderIterator->setDriverFirstName(closestDriver.getFirstName());
-                    riderIterator->setDriverLastName(closestDriver.getLastName());
-                    riderIterator->setDriverPhoneNum(closestDriver.getPhoneNum());
+                    riderIterator->setDriverFirstName(closestDriverIterator->getFirstName());
+                    riderIterator->setDriverLastName(closestDriverIterator->getLastName());
+                    riderIterator->setDriverPhoneNum(closestDriverIterator->getPhoneNum());
                     //set state of rider
                     riderIterator->setState("Driver_on_the_way");
+                    //add rider to driver info
+                    closestDriverIterator->setRiderFirstName(riderIterator->getFirstName());
+                    closestDriverIterator->setRiderLastName(riderIterator->getLastName());
+                    closestDriverIterator->setRiderPhoneNum(riderIterator->getPhoneNum());
+                    //set state of driver
+                    closestDriverIterator->setState("On_the_way_to_pickup");
                     //output Data
                     userOut << message;
                     //update Data
@@ -98,7 +105,6 @@ int main(int argc, char const *argv[])
                                           "find a driver for you at this moment.";
                     userOut << message;
                 }
-        
             }
             else
             {
