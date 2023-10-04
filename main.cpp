@@ -101,7 +101,7 @@ int main(int argc, char const *argv[])
                     std::string message = "Ride requested for user " +  riderIterator->getDriverFirstName() +
                                           ", looking for a Luxury vehicle.\n" + "Pick Up Location: " + 
                                           riderIterator->getPickupLocation() + ", Drop Off Location: " + 
-                                          riderIterator->getDropoffLocation() + " .\n" + "Sorry we can not " +
+                                          riderIterator->getDropoffLocation() + ".\n" + "Sorry we can not " +
                                           "find a driver for you at this moment.";
                     userOut << message;
                 }
@@ -124,7 +124,7 @@ int main(int argc, char const *argv[])
     }
     else
     {
-        userOut << "Phone number is invalid."; 
+        if(status == "request") userOut << "Phone number is invalid."; 
         return 0;
     }
 
