@@ -130,10 +130,69 @@ int main(int argc, char const *argv[])
                 }
                 if(driverIterator->getState() == "On_the_way_to_pickup")
                 {
-
+                    //gets the pointer of rider driver is carrying
+                    std::list<Rider>::iterator riderWithDriver;
+                    isRiderNum(riderList, driverIterator->getRiderPhoneNum(), riderWithDriver);
+                    //finding new driver
+                    double distance = 0.0;
+                    std::list<Driver>::iterator newClosestDriver;
+                    bool driverFound = riderWithDriver->closestDriver(driverList, distance, newClosestDriver);
+                    //new driver found
+                    if(driverFound)
+                    {
+                        //output message
+                        std::string message = "Your driver " + driverIterator->getFirstName() + 
+                                              " has cancelled the ride request. We will now find a new driver for you.\n" + 
+                                              "Ride requested for user " + riderWithDriver->getFirstName() + 
+                                              ", looking for an " + riderWithDriver->getVehiclePref() + " vehicle.\n" +
+                                              "Pick Up Location: " + riderWithDriver->getPickupLocation() + 
+                                              ", Drop Off Location: " + riderWithDriver->getDropoffLocation() + ".\n" +
+                                              "We have found the closest driver " + newClosestDriver->getFirstName() + 
+                                              "(" + doubleToString(newClosestDriver->getRating(), 3) + ") for you.\n" +
+                                              newClosestDriver->getFirstName() + " is now " + doubleToString(distance, 3) + 
+                                              " miles away from you.";
+                        //add newDriver to rider info
+                        riderWithDriver->setDriverFirstName(newClosestDriver->getFirstName());
+                        riderWithDriver->setDriverLastName(newClosestDriver->getLastName());
+                        riderWithDriver->setDriverPhoneNum(newClosestDriver->getPhoneNum());
+                        //set state of rider
+                        riderWithDriver->setState("Driver_on_the_way");
+                        //add rider to newDriver info
+                        newClosestDriver->setRiderFirstName(riderWithDriver->getFirstName());
+                        newClosestDriver->setRiderLastName(riderWithDriver->getLastName());
+                        newClosestDriver->setRiderPhoneNum(riderWithDriver->getPhoneNum());
+                        //set state of driver
+                        newClosestDriver->setState("On_the_way_to_pickup");
+                        //update old driver info
+                        driverIterator->setRiderFirstName("null");
+                        driverIterator->setRiderLastName("null");
+                        driverIterator->setRiderPhoneNum("null");
+                        driverIterator->setState("Available");
+                        //output data
+                        userOut << message;
+                        //update Data
+                        for(Driver driver : driverList)
+                        {
+                            driverOut << driver;
+                        }
+                        for(Rider rider : riderList)
+                        {
+                            riderOut << rider;
+                        }
+                    }
+                    //new driver not found
+                    else
+                    {
+                        std::string message = "Ride requested for user " +  riderWithDriver->getDriverFirstName() +
+                                              ", looking for a Luxury vehicle.\n" + "Pick Up Location: " + 
+                                              riderWithDriver->getPickupLocation() + ", Drop Off Location: " + 
+                                              riderWithDriver->getDropoffLocation() + ".\n" + "Sorry we can not " +
+                                              "find a driver for you at this moment.";
+                        userOut << message;
+                    }
                 }
             }
-            //if acount belongs to rider
+            //if account belongs to rider
             else if(validRiderAccount)
             {
                 //driver is not OTW to pickup
