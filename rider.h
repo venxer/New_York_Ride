@@ -71,7 +71,8 @@ class Rider
         void setDriverPhoneNum(std::string driverPhoneNum);
 
         //functions
-        bool closestDriver(std::list<Driver> &driverList, Driver &driverOut, double &distanceOut);
+        bool closestDriver(std::list<Driver> &driverList, double &distanceOut, 
+                           std::list<Driver>::iterator &closestDriverIterator);
 
 };
 bool isRiderNum(std::list<Rider> &riderList, const std::string num, std::list<Rider>::iterator &riderIterator);

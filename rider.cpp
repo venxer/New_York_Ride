@@ -108,7 +108,10 @@ double calculateDistance(double lat1, double lon1, double lat2, double lon2)
 
     return distanceMiles;
 }
-//checks if a any rider has the phone number
+/*
+ *returns true is number belongs to a rider account
+ *stores pointer to account's rider in riderIterator
+ */
 bool isRiderNum(std::list<Rider> &riderList, const std::string num, std::list<Rider>::iterator &riderIterator)
 {
     for(auto it = riderList.begin(); it != riderList.end(); ++it)
@@ -121,12 +124,17 @@ bool isRiderNum(std::list<Rider> &riderList, const std::string num, std::list<Ri
     }
     return false;
 }
-//returns true is driver is found and stores closest driver in driverOut along with distance
-bool Rider::closestDriver(std::list<Driver> &driverList, Driver &driverOut, double &distanceOut)
+/*
+ *returns true is driver is found
+ *stores pointer to closest driver in closestDriverIterator
+ *stores distance to closest driver in distanceOut
+ */
+bool Rider::closestDriver(std::list<Driver> &driverList, double &distanceOut, 
+                          std::list<Driver>::iterator &closestDriverIterator)
 {
     bool driverIsFound = false;
     double shortestDistance = -1.0;
-    std::list<Driver>::iterator closestDriverIterator;
+    
     for(auto it = driverList.begin(); it != driverList.end(); ++it)
     {
         //filters for available and preffered viechle
@@ -142,20 +150,9 @@ bool Rider::closestDriver(std::list<Driver> &driverList, Driver &driverOut, doub
             {
                 shortestDistance = distance;
                 closestDriverIterator = it;
+                distanceOut = shortestDistance;
             }
         }
-    }
-    if(driverIsFound)
-    {
-        //add rider to driver info
-        closestDriverIterator->setRiderFirstName(firstName);
-        closestDriverIterator->setRiderLastName(lastName);
-        closestDriverIterator->setRiderPhoneNum(phoneNum);
-        //set state of driver
-        closestDriverIterator->setState("On_the_way_to_pickup");
-        //output vars
-        driverOut = *closestDriverIterator;
-        distanceOut = shortestDistance;
     }
     return driverIsFound;
 }
