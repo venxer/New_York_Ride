@@ -39,18 +39,18 @@ int main(int argc, char const *argv[])
         if(status == "request")
         {
             //checks if phoneNum is a rider's phone number
-            Rider rider;
-            bool validAccount = isRiderNum(riderList, phoneNum, rider);
+            std::list<Rider>::iterator riderIterator;
+            bool validAccount = isRiderNum(riderList, phoneNum, riderIterator);
             if(validAccount)
             {
                 //Driver_on_the_way
-                if(rider.getState() == "Driver_on_the_way")
+                if(riderIterator->getState() == "Driver_on_the_way")
                 {
                     userOut << "You have already requested a ride and your driver is on the way to the pickup location.";
                     return 0;
                 }
                 //During_the_trip         
-                if(rider.getState() == "During_the_trip")
+                if(riderIterator->getState() == "During_the_trip")
                 {
                     userOut << "You can not request a ride at this moment as you are already on a trip.";
                     return 0;
@@ -58,31 +58,43 @@ int main(int argc, char const *argv[])
                 //Ready_to_request
                 Driver closestDriver;
                 double distance = 0.0;
-                bool driverFound = rider.closestDriver(driverList, closestDriver, distance);
-
+                bool driverFound = riderIterator->closestDriver(driverList, closestDriver, distance);
                 //driver found
                 if(driverFound)
                 {      
-                    std::string message = "Ride requested for user " + rider.getFirstName() + 
-                                          ", looking for an " + rider.getVehiclePref() + " vehicle.\n" +
-                                          "Pick Up Location: " + rider.getPickupLocation() + 
-                                          ", Drop Off Location: " + rider.getDropoffLocation() + ".\n" +
+                    std::string message = "Ride requested for user " + riderIterator->getFirstName() + 
+                                          ", looking for an " + riderIterator->getVehiclePref() + " vehicle.\n" +
+                                          "Pick Up Location: " + riderIterator->getPickupLocation() + 
+                                          ", Drop Off Location: " + riderIterator->getDropoffLocation() + ".\n" +
                                           "We have found the closest driver " + closestDriver.getFirstName() + 
                                           "(" + doubleToString(closestDriver.getRating(), 3) + ") for you.\n" +
                                           closestDriver.getFirstName() + " is now " + doubleToString(distance, 3) + 
                                           " miles away from you.";
-
-                    /* update by index direclty or update by replacing old with updated */
+                    //add driver to rider info
+                    riderIterator->setDriverFirstName(closestDriver.getFirstName());
+                    riderIterator->setDriverLastName(closestDriver.getLastName());
+                    riderIterator->setDriverPhoneNum(closestDriver.getPhoneNum());
+                    //set state of rider
+                    riderIterator->setState("Driver_on_the_way");
+                    //output Data
                     userOut << message;
-
+                    //update Data
+                    for(Driver driver : driverList)
+                    {
+                        driverOut << driver;
+                    }
+                    for(Rider rider : riderList)
+                    {
+                        riderOut << rider;
+                    }
                 }
                 //driver not found
                 else 
                 {
-                    std::string message = "Ride requested for user " +  rider.getDriverFirstName() +
+                    std::string message = "Ride requested for user " +  riderIterator->getDriverFirstName() +
                                           ", looking for a Luxury vehicle.\n" + "Pick Up Location: " + 
-                                          rider.getPickupLocation() + ", Drop Off Location: " + 
-                                          rider.getDropoffLocation() + " .\n" + "Sorry we can not " +
+                                          riderIterator->getPickupLocation() + ", Drop Off Location: " + 
+                                          riderIterator->getDropoffLocation() + " .\n" + "Sorry we can not " +
                                           "find a driver for you at this moment.";
                     userOut << message;
                 }
