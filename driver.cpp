@@ -1,5 +1,6 @@
 #include "driver.h"
 #include <iostream>
+#include <list>
 
 //constuctor
 Driver::Driver(std::string firstName,
@@ -68,6 +69,36 @@ void Driver::setRiderLastName(std::string riderLastName)
 void Driver::setRiderPhoneNum(std::string riderPhoneNum)
 {
     this->riderPhoneNum = riderPhoneNum;
+}
+
+//functions
+//find the driver who the riderNum belongs to
+bool findDriver(std::list<Driver> &driverList, std::string riderNum, 
+                std::list<Driver>::iterator &driverWithRiderIterator)
+{
+    for(auto it = driverList.begin(); it != driverList.end(); ++it)
+    {
+        if(it->getRiderPhoneNum() == riderNum)
+        {
+            driverWithRiderIterator = it;
+            return true;
+        }
+    }
+    return false;
+}
+
+bool isDriverNum(std::list<Driver> &driverList, const std::string num, 
+                 std::list<Driver>::iterator &driverIterator)
+{
+    for(auto it = driverList.begin(); it != driverList.end(); ++it)
+    {
+        if(it->getPhoneNum() == num)
+        {
+            driverIterator = it;
+            return true;
+        }
+    }
+    return false;
 }
 
 std::ostream &operator<<(std::ostream &out_str, const Driver &driver)
