@@ -112,10 +112,10 @@ double calculateDistance(double lat1, double lon1, double lat2, double lon2)
  *returns true is number belongs to a rider account
  *stores pointer to account's rider in riderIterator
  */
-bool isRiderNum(std::list<Rider> &riderList, const std::string num, 
+bool findRider(std::list<Rider> &riderList, const std::string num, 
                 std::list<Rider>::iterator &riderIterator)
 {
-    for(auto it = riderList.begin(); it != riderList.end(); ++it)
+    for(std::list<Rider>::iterator it = riderList.begin(); it != riderList.end(); ++it)
     {
         if(it->getPhoneNum() == num)
         {
@@ -136,7 +136,7 @@ bool Rider::closestDriver(std::list<Driver> &driverList, double &distanceOut,
     bool driverIsFound = false;
     double shortestDistance = -1.0;
     
-    for(auto it = driverList.begin(); it != driverList.end(); ++it)
+    for(std::list<Driver>::iterator it = driverList.begin(); it != driverList.end(); ++it)
     {
         //filters for available and preffered viechle
         if(it->getState() == "Available" && 

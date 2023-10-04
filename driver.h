@@ -61,9 +61,7 @@ class Driver
         //functions
         
 };
-bool findDriver(std::list<Driver> &driverList, std::string riderNum, 
-                std::list<Driver>::iterator &driverWithRiderIterator);
-bool isDriverNum(std::list<Driver> &driverList, const std::string num, 
+bool findDriver(std::list<Driver> &driverList, const std::string num, 
                  std::list<Driver>::iterator &driverIterator);
 std::ostream &operator<<(std::ostream &out_str, const Driver &driver);
 
