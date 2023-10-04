@@ -67,14 +67,14 @@ class Rider
         //setters
         void setState(std::string state);
         void setDriverFirstName(std::string driverFirstName);
-        void setDriverLastNam(std::string driverLastName);
+        void setDriverLastName(std::string driverLastName);
         void setDriverPhoneNum(std::string driverPhoneNum);
 
         //functions
         bool closestDriver(std::list<Driver> &driverList, Driver &driverOut, double &distanceOut);
 
 };
-bool isRiderNum(const std::list<Rider> &riderList, const std::string num, Rider &riderOut);
+bool isRiderNum(std::list<Rider> &riderList, const std::string num, std::list<Rider>::iterator &riderIterator);
 double calculateDistance(double lat1, double lon1, double lat2, double lon2);
 std::ostream &operator<<(std::ostream &out_str, const Rider &riderOut);
 
