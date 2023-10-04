@@ -112,7 +112,8 @@ double calculateDistance(double lat1, double lon1, double lat2, double lon2)
  *returns true is number belongs to a rider account
  *stores pointer to account's rider in riderIterator
  */
-bool isRiderNum(std::list<Rider> &riderList, const std::string num, std::list<Rider>::iterator &riderIterator)
+bool isRiderNum(std::list<Rider> &riderList, const std::string num, 
+                std::list<Rider>::iterator &riderIterator)
 {
     for(auto it = riderList.begin(); it != riderList.end(); ++it)
     {
