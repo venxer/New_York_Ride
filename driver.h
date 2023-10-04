@@ -3,6 +3,7 @@
 
 #include <string>
 #include <iostream>
+#include <list>
 
 class Driver
 {
@@ -56,8 +57,14 @@ class Driver
         void setRiderFirstName(std::string riderFirstName);
         void setRiderLastName(std::string riderLastName);
         void setRiderPhoneNum(std::string riderPhoneNum);
-};
 
+        //functions
+        
+};
+bool findDriver(std::list<Driver> &driverList, std::string riderNum, 
+                std::list<Driver>::iterator &driverWithRiderIterator);
+bool isDriverNum(std::list<Driver> &driverList, const std::string num, 
+                 std::list<Driver>::iterator &driverIterator);
 std::ostream &operator<<(std::ostream &out_str, const Driver &driver);
 
 #endif
