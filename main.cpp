@@ -5,7 +5,7 @@
 #include <cmath>
 #include <iomanip>
 #include <algorithm>
-
+//CHECK VIECHEL TYPE. AN vs A 
 std::list<Driver> readDriverInput(std::string inputFile);
 std::list<Rider> readRiderInput(std::string inputFile);
 bool validPhoneNumFormat(std::string phoneNum);
@@ -21,18 +21,13 @@ int main(int argc, char const *argv[])
     std::string phoneNum = argv[6];
     std::string status = argv[7];
 
+    std::string an_OR_a = "";
     std::ofstream userOut(userOutput);
     std::ofstream driverOut(driverOutput);
     std::ofstream riderOut(riderOutput);
 
     std::list<Driver> driverList = readDriverInput(driverInput);
     std::list<Rider> riderList = readRiderInput(riderInput);
-
-    // std::list<Driver> driverList = readDriverInput("drivers.txt");
-    // for(Driver driver : driverList)
-    // {
-    //     std::cout << driver.getLongitude() << std::endl;
-    // }
 
     //check if phone number is invalid
     if(validPhoneNumFormat(phoneNum))
@@ -41,7 +36,7 @@ int main(int argc, char const *argv[])
         {
             //checks if phoneNum is a rider's phone number
             std::list<Rider>::iterator riderIterator;
-            bool validAccount = isRiderNum(riderList, phoneNum, riderIterator);
+            bool validAccount = findRider(riderList, phoneNum, riderIterator);
             if(validAccount)
             {
                 //Driver_on_the_way
@@ -64,8 +59,9 @@ int main(int argc, char const *argv[])
                 if(driverFound)
                 {   
                     //output message
+                    if(riderIterator->getVehiclePref() == "Economy") an_OR_a += "n";
                     std::string message = "Ride requested for user " + riderIterator->getFirstName() + 
-                                          ", looking for an " + riderIterator->getVehiclePref() + " vehicle.\n" +
+                                          ", looking for a" + an_OR_a + " " + riderIterator->getVehiclePref() + " vehicle.\n" +
                                           "Pick Up Location: " + riderIterator->getPickupLocation() + 
                                           ", Drop Off Location: " + riderIterator->getDropoffLocation() + ".\n" +
                                           "We have found the closest driver " + closestDriverIterator->getFirstName() + 
@@ -99,9 +95,10 @@ int main(int argc, char const *argv[])
                 //driver not found
                 else 
                 {
+                    if(riderIterator->getVehiclePref() == "Economy") an_OR_a += "n";
                     std::string message = "Ride requested for user " +  riderIterator->getDriverFirstName() +
-                                          ", looking for a Luxury vehicle.\n" + "Pick Up Location: " + 
-                                          riderIterator->getPickupLocation() + ", Drop Off Location: " + 
+                                          ", looking for a" + an_OR_a + " " + riderIterator->getVehiclePref() + " vehicle.\n" + 
+                                          "Pick Up Location: " + riderIterator->getPickupLocation() + ", Drop Off Location: " + 
                                           riderIterator->getDropoffLocation() + ".\n" + "Sorry we can not " +
                                           "find a driver for you at this moment.";
                     userOut << message;
@@ -117,9 +114,9 @@ int main(int argc, char const *argv[])
         {
             //find the account the number belongs to
             std::list<Driver>::iterator driverIterator;
-            bool validDriverAccount = isDriverNum(driverList, phoneNum, driverIterator);
+            bool validDriverAccount = findDriver(driverList, phoneNum, driverIterator);
             std::list<Rider>::iterator riderIterator;
-            bool validRiderAccount = isRiderNum(riderList, phoneNum, riderIterator);
+            bool validRiderAccount = findRider(riderList, phoneNum, riderIterator);
             //if account belongs to driver
             if(validDriverAccount)
             {
@@ -132,7 +129,7 @@ int main(int argc, char const *argv[])
                 {
                     //gets the pointer of rider driver is carrying
                     std::list<Rider>::iterator riderWithDriver;
-                    isRiderNum(riderList, driverIterator->getRiderPhoneNum(), riderWithDriver);
+                    findRider(riderList, driverIterator->getRiderPhoneNum(), riderWithDriver);
                     //finding new driver
                     double distance = 0.0;
                     std::list<Driver>::iterator newClosestDriver;
@@ -141,10 +138,11 @@ int main(int argc, char const *argv[])
                     if(driverFound)
                     {
                         //output message
+                        if(riderWithDriver->getVehiclePref() == "Economy") an_OR_a += "n";
                         std::string message = "Your driver " + driverIterator->getFirstName() + 
                                               " has cancelled the ride request. We will now find a new driver for you.\n" + 
                                               "Ride requested for user " + riderWithDriver->getFirstName() + 
-                                              ", looking for an " + riderWithDriver->getVehiclePref() + " vehicle.\n" +
+                                              ", looking for a" + an_OR_a + " " + riderWithDriver->getVehiclePref() + " vehicle.\n" +
                                               "Pick Up Location: " + riderWithDriver->getPickupLocation() + 
                                               ", Drop Off Location: " + riderWithDriver->getDropoffLocation() + ".\n" +
                                               "We have found the closest driver " + newClosestDriver->getFirstName() + 
@@ -205,7 +203,7 @@ int main(int argc, char const *argv[])
                 if(riderIterator->getState() == "Driver_on_the_way")
                 {
                     std::list<Driver>::iterator driverWithRiderIterator;
-                    findDriver(driverList, riderIterator->getPhoneNum(), driverWithRiderIterator);
+                    findDriver(driverList, riderIterator->getDriverPhoneNum(), driverWithRiderIterator);
                     //remove rider from driver
                     driverWithRiderIterator->setRiderFirstName("null");
                     driverWithRiderIterator->setRiderLastName("null");
@@ -213,7 +211,7 @@ int main(int argc, char const *argv[])
                     //set driver state
                     driverWithRiderIterator->setState("Available");
                     //output message
-                    std::string message = "Ride request for user " + riderIterator->getFirstName() +  "is now canceled by the user.";
+                    std::string message = "Ride request for user " + riderIterator->getFirstName() +  " is now canceled by the user.";
                     //remove rider
                     riderList.erase(riderIterator);
                     //output Data
@@ -227,13 +225,11 @@ int main(int argc, char const *argv[])
                     {
                         riderOut << rider;
                     }
-                    return 0;
                 }
             }
             else
             {
                 userOut << "Account does not exist.";
-                return 0;
             }
         }
         else
@@ -245,7 +241,6 @@ int main(int argc, char const *argv[])
     else
     {
         if(status == "request") userOut << "Phone number is invalid."; 
-        return 0;
     }
 
     return 0;
