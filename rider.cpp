@@ -85,7 +85,16 @@ void Rider::setDriverPhoneNum(std::string driverPhoneNum)
 }
 
 //functions
-// calculate the distance between two coordinates using Haversine formula
+/**
+ * calculate the distance between two coordinates using Haversine formula
+ * 
+ * @param lat1 Latitude of the first coordinate
+ * @param lon1 Longitude of the first coordinate
+ * @param lat2 Latitude of the second coordinate
+ * @param lon2 Longitude of the second coordinate
+ * 
+ * @return Distance between the two coordinates in miles.
+ */
 double calculateDistance(double lat1, double lon1, double lat2, double lon2) 
 {
     const double radiusOfEarth = 6371.0; // Earth's radius in kilometers
@@ -108,9 +117,14 @@ double calculateDistance(double lat1, double lon1, double lat2, double lon2)
 
     return distanceMiles;
 }
-/*
- *returns true is number belongs to a rider account
- *stores pointer to account's rider in riderIterator
+/**
+ * finds the Rider from the given list associated number provided
+ * 
+ * @param riderList list of Riders to search through
+ * @param num phone number of the targeted Rider
+ * @param riderIterator points to the targeted Rider
+ * 
+ * @return true if Rider with specific number is found, false otherwise
  */
 bool findRider(std::list<Rider> &riderList, const std::string num, 
                 std::list<Rider>::iterator &riderIterator)
@@ -125,10 +139,17 @@ bool findRider(std::list<Rider> &riderList, const std::string num,
     }
     return false;
 }
-/*
- *returns true is driver is found
- *stores pointer to closest driver in closestDriverIterator
- *stores distance to closest driver in distanceOut
+/**
+ * Finds the closest available driver with the preferred vehicle 
+ * type based on the rider's location.
+ * 
+ * @param driverList list of Drivers to search through
+ * @param distanceOut reference to a double variable that will store the
+ *                    shortest distance to the closest driver
+ * @param closestDriverIterator reference to an iterator that will point to
+ *                              the closest driver if one exists.
+ * 
+ * @return true if available driver with the preferred vehicle type is found, false otherwise.
  */
 bool Rider::closestDriver(std::list<Driver> &driverList, double &distanceOut, 
                           std::list<Driver>::iterator &closestDriverIterator)
@@ -157,7 +178,16 @@ bool Rider::closestDriver(std::list<Driver> &driverList, double &distanceOut,
     }
     return driverIsFound;
 }
-
+/**
+ * output stream in format firstName, lastName, gender, age, phoneNum, rating, pickupLocation, 
+ * pickupLatitude, pickupLongitude, dropoffLocation, dropoffLatitude, dropoffLongitude, vehiclePref, 
+ * state, driverFirstName, driverLastName, driverPhoneNum
+ *
+ * @param out_str output stream
+ * @param rider rider object whose data would be printed
+ * 
+ * @return output stream with rider data seperated by space
+ */
 std::ostream &operator<<(std::ostream &out_str, const Rider &rider)
 {
     out_str << rider.getFirstName() << " " << rider.getLastName() << " " 

@@ -72,7 +72,16 @@ void Driver::setRiderPhoneNum(std::string riderPhoneNum)
 }
 
 //functions
-//find the driver who the riderNum belongs to
+/**
+ * finds the Driver from the given list associated number provided
+ * 
+ * @param driverList list of Drivers to search through
+ * @param num phone number of the targeted Driver
+ * @param driverIterator reference to an iterator that will point to the 
+ *                       targeted Driver if one exists
+ * 
+ * @return true if Driver with specific number is found, false otherwise
+ */
 bool findDriver(std::list<Driver> &driverList, const std::string num, 
                  std::list<Driver>::iterator &driverIterator)
 {
@@ -86,7 +95,15 @@ bool findDriver(std::list<Driver> &driverList, const std::string num,
     }
     return false;
 }
-
+/**
+ * firstName, lastName, gender, age, phoneNum, rating, latitude, longitude, 
+ * vehicleType, state, riderFirstName, riderLastName, riderPhoneNum
+ * 
+ * @param out_str output stream
+ * @param driver driver object whose data would be printed
+ * 
+ * @return output stream with driver data seperated by space
+ */
 std::ostream &operator<<(std::ostream &out_str, const Driver &driver)
 {
     out_str << driver.getFirstName() << " " << driver.getLastName() << " " 
