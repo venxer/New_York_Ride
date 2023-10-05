@@ -5,12 +5,13 @@
 #include <fstream>
 #include <cmath>
 #include <iomanip>
+#include <sstream>
 #include <algorithm>
 
 std::list<Driver> readDriverInput(std::string inputFile);
 std::list<Rider> readRiderInput(std::string inputFile);
 bool validPhoneNumFormat(std::string phoneNum);
-std::string doubleToString(double num, int targetLength);
+std::string doubleToString(double num);
 
 int main(int argc, char const *argv[])
 {
@@ -56,12 +57,22 @@ int main(int argc, char const *argv[])
                 if(riderIterator->getState() == "Driver_on_the_way")
                 {
                     userOut << "You have already requested a ride and your driver is on the way to the pickup location.";
+                    //close all files
+                    userOut.close();
+                    driverOut.close();
+                    riderOut.close();
+                    return 0;
                 }
 
                 /* Rider State: During_the_trip */   
                 if(riderIterator->getState() == "During_the_trip")
                 {
                     userOut << "You can not request a ride at this moment as you are already on a trip.";
+                    //close all files
+                    userOut.close();
+                    driverOut.close();
+                    riderOut.close();   
+                    return 0;
                 }
 
                 /* Rider State: Ready_to_request */
@@ -79,8 +90,8 @@ int main(int argc, char const *argv[])
                                           "Pick Up Location: " + riderIterator->getPickupLocation() + 
                                           ", Drop Off Location: " + riderIterator->getDropoffLocation() + ".\n" +
                                           "We have found the closest driver " + closestDriverIterator->getFirstName() + 
-                                          "(" + doubleToString(closestDriverIterator->getRating(), 3) + ") for you.\n" +
-                                          closestDriverIterator->getFirstName() + " is now " + doubleToString(distance, 3) + 
+                                          "(" + doubleToString(closestDriverIterator->getRating()) + ") for you.\n" +
+                                          closestDriverIterator->getFirstName() + " is now " + doubleToString(distance) + 
                                           " miles away from you.";
                     //update Rider with Driver info
                     riderIterator->setDriverFirstName(closestDriverIterator->getFirstName());
@@ -110,7 +121,8 @@ int main(int argc, char const *argv[])
                 else 
                 {
                     if(riderIterator->getVehiclePref() == "Economy") an_OR_a += "n";
-                    std::string message = "Ride requested for user " +  riderIterator->getDriverFirstName() +
+                    std::cout << *riderIterator << std::endl;
+                    std::string message = "Ride requested for user " +  riderIterator->getFirstName() +
                                           ", looking for a" + an_OR_a + " " + riderIterator->getVehiclePref() + " vehicle.\n" + 
                                           "Pick Up Location: " + riderIterator->getPickupLocation() + ", Drop Off Location: " + 
                                           riderIterator->getDropoffLocation() + ".\n" + "Sorry we can not " +
@@ -162,8 +174,8 @@ int main(int argc, char const *argv[])
                                               "Pick Up Location: " + riderWithDriver->getPickupLocation() + 
                                               ", Drop Off Location: " + riderWithDriver->getDropoffLocation() + ".\n" +
                                               "We have found the closest driver " + newClosestDriver->getFirstName() + 
-                                              "(" + doubleToString(newClosestDriver->getRating(), 3) + ") for you.\n" +
-                                              newClosestDriver->getFirstName() + " is now " + doubleToString(distance, 3) + 
+                                              "(" + doubleToString(newClosestDriver->getRating()) + ") for you.\n" +
+                                              newClosestDriver->getFirstName() + " is now " + doubleToString(distance) + 
                                               " miles away from you.";
                         //update Rider with newDriver info
                         riderWithDriver->setDriverFirstName(newClosestDriver->getFirstName());
@@ -370,19 +382,18 @@ bool validPhoneNumFormat(std::string phoneNum)
     return false;
 }
 /**
- * turns a double to a string
+ * turns a double to a string with precision of 1 floored
  * 
  * @param num double as an input
- * @param targetLength desired length of output string
  * 
- * @return double as string with specific length
+ * @return double as string with precision of 1 decimal place
  */
-std::string doubleToString(double num, int targetLength)
+std::string doubleToString(double num)
 {
-    //check length of targetLength
-    if(targetLength > std::to_string(num).length())
-    {
-        return std::to_string(num);
-    }
-    return std::to_string(num).substr(0, targetLength);
+    num *= 10;
+    num = floor(num);
+    num /= 10;
+    std::ostringstream streamObj;
+    streamObj << std::fixed << std::setprecision(1) << num;
+    return streamObj.str();
 }
